@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Task Planner</title>
+    <title>UGTECH SOLUTION</title>
     <style>
         * {
             margin: 0;
@@ -13,445 +13,1285 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #0066cc 0%, #004d99 100%);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
+            line-height: 1.6;
+            color: #1a1a2e;
+            background: linear-gradient(135deg, #0f2027 0%, #203a43 25%, #2c5364 50%, #1e3c72 75%, #2a5298 100%);
+            background-attachment: fixed;
+            position: relative;
+            overflow-x: hidden;
         }
 
-        .container {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(10px);
-            border-radius: 15px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
-            max-width: 500px;
-            padding: 30px;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(74, 144, 226, 0.15), transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(46, 204, 113, 0.1), transparent 50%),
+                radial-gradient(circle at 40% 20%, rgba(155, 89, 182, 0.1), transparent 50%),
+                radial-gradient(circle at 60% 60%, rgba(52, 152, 219, 0.12), transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+            animation: shimmer 15s ease-in-out infinite;
         }
 
-        h1 {
+        @keyframes shimmer {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        /* FLEXBOX: Navigation Header - Enhanced Glassmorphism */
+        header {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.25);
             color: white;
-            text-align: center;
-            margin-bottom: 30px;
-            font-size: 2em;
+            padding: 1.2rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 1;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, rgba(74, 144, 226, 0.4), rgba(155, 89, 182, 0.3));
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3);
+        }
+
+        .logo-icon svg {
+            width: 30px;
+            height: 30px;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            letter-spacing: 2px;
             text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
         }
 
-        .input-section {
+        .nav-links {
             display: flex;
-            gap: 10px;
-            margin-bottom: 30px;
+            list-style: none;
+            gap: 2rem;
         }
 
-        #taskInput {
-            flex: 1;
-            padding: 12px 15px;
-            background: rgba(255, 255, 255, 0.9);
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            border-radius: 8px;
-            font-size: 16px;
+        .nav-links a {
+            color: white;
+            text-decoration: none;
             transition: all 0.3s;
+            font-weight: 500;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 10px;
         }
 
-        #taskInput:focus {
-            outline: none;
-            background: rgba(255, 255, 255, 1);
-            border-color: rgba(255, 255, 255, 0.5);
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+        .nav-links a:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
         }
 
-        #addBtn {
-            padding: 12px 25px;
-            background: rgba(0, 102, 204, 0.7);
-            backdrop-filter: blur(10px);
+        .menu-toggle {
+            display: none;
+            background: rgba(255, 255, 255, 0.2);
             border: 1px solid rgba(255, 255, 255, 0.3);
             color: white;
-            border-radius: 8px;
-            font-size: 16px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem 1rem;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+
+        /* FLEXBOX: Hero Section - Enhanced Glassmorphism */
+        .hero {
+            padding: 6rem 2rem 4rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 600px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-content {
+            max-width: 900px;
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border-radius: 30px;
+            padding: 4rem 3rem;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                transparent,
+                rgba(74, 144, 226, 0.1),
+                transparent
+            );
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #ffffff 0%, #e3f2fd 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 2px 20px rgba(0, 0, 0, 0.2));
+            font-weight: 700;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            line-height: 1.8;
+            color: #e3f2fd;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        .hero .location {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            color: #bbdefb;
+            font-weight: 500;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
+            color: white;
+            padding: 1rem 2.5rem;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            display: inline-block;
+            transition: all 0.3s;
+            box-shadow: 0 4px 20px rgba(74, 144, 226, 0.4);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(74, 144, 226, 0.6);
+            background: linear-gradient(135deg, #5aa0f2 0%, #4a90e2 100%);
+        }
+
+        /* Moving Text Banner */
+        .moving-text-container {
+            width: 100%;
+            overflow: hidden;
+            background: linear-gradient(135deg, rgba(15, 32, 39, 0.8), rgba(44, 83, 100, 0.8));
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 1.5rem 0;
+            position: relative;
+            z-index: 1;
+            border-top: 1px solid rgba(74, 144, 226, 0.3);
+            border-bottom: 1px solid rgba(74, 144, 226, 0.3);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .moving-text {
+            display: flex;
+            white-space: nowrap;
+            animation: scroll 30s linear infinite;
+        }
+
+        .moving-text span {
+            background: linear-gradient(90deg, #ffffff 0%, #b3e5fc 50%, #ffffff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 1.3rem;
+            font-weight: 600;
+            padding: 0 3rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        @keyframes scroll {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        /* About Section */
+        .about {
+            padding: 4rem 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #ffffff 0%, #b3e5fc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 2px 20px rgba(0, 0, 0, 0.2));
+            font-weight: 700;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #e1f5fe;
+            margin-bottom: 3rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 2rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            line-height: 1.8;
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
+        }
+
+        /* GRID: Services Section - Enhanced Glassmorphism */
+        .services {
+            padding: 4rem 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            padding: 2rem;
+            border-radius: 25px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            border: 2px solid rgba(255, 255, 255, 0.25);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, 
+                transparent, 
+                rgba(74, 144, 226, 0.15), 
+                transparent);
+            transform: rotate(45deg);
+            transition: all 0.6s;
+        }
+
+        .service-card:hover::before {
+            left: 100%;
+        }
+
+        .service-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 15px 50px rgba(74, 144, 226, 0.4);
+            border-color: rgba(74, 144, 226, 0.6);
+        }
+
+        .service-card:nth-child(1) .service-icon {
+            background: linear-gradient(135deg, rgba(74, 144, 226, 0.4), rgba(58, 123, 213, 0.3));
+        }
+
+        .service-card:nth-child(2) .service-icon {
+            background: linear-gradient(135deg, rgba(52, 152, 219, 0.4), rgba(41, 128, 185, 0.3));
+        }
+
+        .service-card:nth-child(3) .service-icon {
+            background: linear-gradient(135deg, rgba(46, 204, 113, 0.4), rgba(39, 174, 96, 0.3));
+        }
+
+        .service-card:nth-child(4) .service-icon {
+            background: linear-gradient(135deg, rgba(155, 89, 182, 0.4), rgba(142, 68, 173, 0.3));
+        }
+
+        .service-card:nth-child(5) .service-icon {
+            background: linear-gradient(135deg, rgba(52, 73, 94, 0.4), rgba(44, 62, 80, 0.3));
+        }
+
+        .service-card:nth-child(6) .service-icon {
+            background: linear-gradient(135deg, rgba(26, 188, 156, 0.4), rgba(22, 160, 133, 0.3));
+        }
+
+        .service-card h3 {
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #ffffff 0%, #e1f5fe 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 1.5rem;
+            font-weight: 600;
+            filter: drop-shadow(0 2px 10px rgba(0, 0, 0, 0.1));
+        }
+
+        .service-card p {
+            color: #e3f2fd;
+            line-height: 1.8;
+        }
+
+        .service-icon {
+            width: 100%;
+            height: 180px;
+            margin-bottom: 1.5rem;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 4px 15px rgba(30, 60, 114, 0.2);
+        }
+
+        /* GRID: Portfolio/Gallery - Enhanced Glassmorphism */
+        .portfolio {
+            padding: 4rem 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .portfolio-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 25px;
+            aspect-ratio: 16/10;
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #e3f2fd;
+            font-size: 1.3rem;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        #addBtn:hover {
-            background: rgba(0, 102, 204, 0.9);
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(0, 102, 204, 0.6);
-        }
-
-        #addBtn:active {
-            transform: translateY(-1px);
-            box-shadow: 0 4px 15px rgba(0, 102, 204, 0.4);
-        }
-
-        #addBtn:active {
-            transform: translateY(0);
-        }
-
-        .filter-section {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-            justify-content: center;
-        }
-
-        .filter-btn {
-            padding: 8px 16px;
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 6px;
-            color: white;
-            cursor: pointer;
-            font-size: 14px;
-            transition: all 0.3s;
-        }
-
-        .filter-btn:hover {
-            background: rgba(255, 255, 255, 0.3);
-            border-color: rgba(255, 255, 255, 0.5);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-        }
-
-        .filter-btn:active {
-            transform: translateY(0);
-        }
-
-        .filter-btn.active {
-            background: rgba(0, 102, 204, 0.8);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            color: white;
-        }
-
-        .stats {
+            transition: all 0.4s;
+            padding: 2rem;
             text-align: center;
-            margin-bottom: 20px;
-            color: rgba(255, 255, 255, 0.9);
-            font-size: 14px;
+            border: 2px solid rgba(255, 255, 255, 0.25);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
         }
 
-        #todoList {
+        .portfolio-item::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, 
+                transparent, 
+                rgba(74, 144, 226, 0.2), 
+                transparent);
+            transform: rotate(45deg);
+            transition: all 0.6s;
+        }
+
+        .portfolio-item:hover::before {
+            left: 100%;
+        }
+
+        .portfolio-item:hover {
+            transform: scale(1.05) translateY(-5px);
+            box-shadow: 0 15px 50px rgba(74, 144, 226, 0.4);
+            border-color: rgba(74, 144, 226, 0.6);
+        }
+
+        .portfolio-icon {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.2));
+        }
+
+        /* Why Choose Us Section - Enhanced Glassmorphism */
+        .why-choose {
+            padding: 4rem 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature {
+            text-align: center;
+            padding: 2.5rem;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border-radius: 25px;
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.2);
+            transition: all 0.3s;
+            color: white;
+        }
+
+        .feature:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 50px rgba(31, 38, 135, 0.3);
+            border-color: rgba(255, 255, 255, 0.6);
+        }
+
+        .feature-icon {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.2));
+        }
+
+        .feature h3 {
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+            font-weight: 600;
+        }
+
+        .feature p {
+            opacity: 0.95;
+        }
+
+        /* FLEXBOX: Footer - Glassmorphism */
+        footer {
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            color: white;
+            padding: 3rem 2rem 1rem;
+            position: relative;
+            z-index: 1;
+            border-top: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto 2rem;
+        }
+
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            padding: 1.5rem;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .footer-section h4 {
+            margin-bottom: 1rem;
+            color: white;
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .footer-section p {
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.8;
+        }
+
+        .footer-section ul {
             list-style: none;
         }
 
-        .todo-item {
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            padding: 15px;
-            margin-bottom: 10px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
+        .footer-section li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section a {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            line-height: 2;
             transition: all 0.3s;
-            animation: slideIn 0.3s ease;
         }
 
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateX(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        .todo-item:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: translateX(8px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
-        }
-
-        .todo-item.completed {
-            opacity: 0.6;
-        }
-
-        .todo-item.completed .todo-text {
-            text-decoration: line-through;
-            color: rgba(255, 255, 255, 0.6);
-        }
-
-        .checkbox {
-            width: 20px;
-            height: 20px;
-            cursor: pointer;
-            accent-color: #0066cc;
-        }
-
-        .todo-text {
-            flex: 1;
+        .footer-section a:hover {
             color: white;
-            font-size: 16px;
-            word-break: break-word;
+            padding-left: 5px;
         }
 
-        .delete-btn {
-            background: rgba(0, 123, 255, 0.7);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
+        .contact-info {
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 2;
+        }
+
+        .contact-info strong {
             color: white;
-            padding: 8px 15px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 14px;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .delete-btn:hover {
-            background: rgba(0, 123, 255, 0.9);
-            transform: scale(1.08);
-            box-shadow: 0 6px 18px rgba(0, 123, 255, 0.5);
-        }
-
-        .delete-btn:active {
-            transform: scale(1.02);
-        }
-
-        .empty-state {
-            text-align: center;
-            padding: 40px 20px;
-            color: rgba(255, 255, 255, 0.8);
-        }
-
-        .empty-state-icon {
-            font-size: 48px;
-            margin-bottom: 10px;
-        }
-
-        .clear-all-btn {
-            width: 100%;
-            padding: 12px;
-            background: rgba(0, 123, 255, 0.7);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            color: white;
-            border-radius: 8px;
-            font-size: 14px;
             font-weight: 600;
-            cursor: pointer;
-            margin-top: 20px;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .clear-all-btn:hover:not(:disabled) {
-            background: rgba(0, 123, 255, 0.9);
-            box-shadow: 0 8px 20px rgba(0, 123, 255, 0.5);
-            transform: translateY(-2px);
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 0.9);
         }
 
-        .clear-all-btn:active:not(:disabled) {
-            transform: translateY(0);
-            box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                width: 100%;
+                flex-direction: column;
+                gap: 1rem;
+                padding-top: 1rem;
+                background: rgba(255, 255, 255, 0.1);
+                backdrop-filter: blur(20px);
+                border-radius: 10px;
+                margin-top: 1rem;
+                padding: 1rem;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .hero {
+                padding: 4rem 1.5rem 3rem;
+                min-height: 500px;
+            }
+
+            .hero-content {
+                padding: 2.5rem 1.5rem;
+            }
+
+            .hero h1 {
+                font-size: 1.8rem;
+                line-height: 1.3;
+                margin-bottom: 1rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .hero .location {
+                font-size: 1rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .btn {
+                padding: 0.8rem 2rem;
+                font-size: 0.95rem;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+                margin-bottom: 1rem;
+                padding: 0 1rem;
+            }
+
+            .section-subtitle {
+                font-size: 1rem;
+                padding: 1.5rem;
+                margin-bottom: 2rem;
+            }
+
+            .about, .services, .portfolio, .why-choose {
+                padding: 3rem 1rem;
+            }
+
+            .moving-text span {
+                font-size: 1rem;
+                padding: 0 2rem;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .service-card {
+                padding: 1.5rem;
+            }
+
+            .service-icon {
+                height: 150px;
+            }
+
+            .service-card h3 {
+                font-size: 1.3rem;
+            }
+
+            .service-card p {
+                font-size: 0.95rem;
+            }
+
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .portfolio-item {
+                font-size: 1.1rem;
+                padding: 1.5rem;
+            }
+
+            .portfolio-icon {
+                font-size: 2.5rem;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .feature {
+                padding: 2rem 1.5rem;
+            }
+
+            .feature-icon {
+                font-size: 3rem;
+            }
+
+            .feature h3 {
+                font-size: 1.2rem;
+            }
+
+            .feature p {
+                font-size: 0.95rem;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+
+            .footer-section {
+                padding: 1.5rem;
+            }
+
+            .footer-section h4 {
+                font-size: 1.1rem;
+            }
+
+            .logo-container {
+                gap: 0.7rem;
+            }
+
+            .logo {
+                font-size: 1.2rem;
+            }
+
+            .logo-icon {
+                width: 40px;
+                height: 40px;
+            }
+
+            .logo-icon svg {
+                width: 24px;
+                height: 24px;
+            }
         }
 
-        .clear-all-btn:disabled {
-            background: rgba(204, 204, 204, 0.3);
-            cursor: not-allowed;
-            border-color: rgba(255, 255, 255, 0.2);
-            opacity: 0.5;
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+
+            .hero p {
+                font-size: 1.15rem;
+            }
+
+            .section-title {
+                font-size: 2.5rem;
+            }
+
+            .services-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.8rem;
+            }
+
+            .portfolio-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.8rem;
+            }
+
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.8rem;
+            }
+
+            .hero-content {
+                padding: 3.5rem 2.5rem;
+            }
+
+            .about, .services, .portfolio, .why-choose {
+                padding: 3.5rem 2rem;
+            }
+        }
+
+        @media (min-width: 1025px) and (max-width: 1440px) {
+            .services-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .portfolio-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (min-width: 1441px) {
+            .container {
+                max-width: 1400px;
+            }
+
+            .hero h1 {
+                font-size: 4rem;
+            }
+
+            .section-title {
+                font-size: 3.5rem;
+            }
+
+            .services-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 2.5rem;
+            }
+
+            .portfolio-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 2.5rem;
+            }
+        }
+
+        /* Extra small devices (portrait phones) */
+        @media (max-width: 480px) {
+            .hero {
+                padding: 3rem 1rem 2rem;
+                min-height: 450px;
+            }
+
+            .hero-content {
+                padding: 2rem 1.2rem;
+                border-radius: 20px;
+            }
+
+            .hero h1 {
+                font-size: 1.5rem;
+                line-height: 1.3;
+            }
+
+            .hero p {
+                font-size: 0.9rem;
+                line-height: 1.6;
+            }
+
+            .hero .location {
+                font-size: 0.9rem;
+            }
+
+            .btn {
+                padding: 0.7rem 1.5rem;
+                font-size: 0.9rem;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .section-subtitle {
+                font-size: 0.9rem;
+                padding: 1.2rem;
+            }
+
+            .service-card {
+                padding: 1.2rem;
+                border-radius: 20px;
+            }
+
+            .service-icon {
+                height: 130px;
+                border-radius: 12px;
+            }
+
+            .service-card h3 {
+                font-size: 1.15rem;
+            }
+
+            .service-card p {
+                font-size: 0.9rem;
+                line-height: 1.6;
+            }
+
+            .portfolio-item {
+                font-size: 1rem;
+                padding: 1.2rem;
+                border-radius: 20px;
+            }
+
+            .portfolio-icon {
+                font-size: 2.2rem;
+            }
+
+            .feature {
+                padding: 1.5rem 1.2rem;
+                border-radius: 20px;
+            }
+
+            .feature-icon {
+                font-size: 2.5rem;
+            }
+
+            .feature h3 {
+                font-size: 1.1rem;
+            }
+
+            .feature p {
+                font-size: 0.9rem;
+            }
+
+            .footer-section {
+                padding: 1.2rem;
+            }
+
+            .moving-text span {
+                font-size: 0.9rem;
+                padding: 0 1.5rem;
+            }
+
+            .logo {
+                font-size: 1rem;
+                letter-spacing: 1px;
+            }
+
+            .logo-icon {
+                width: 35px;
+                height: 35px;
+            }
+
+            .logo-icon svg {
+                width: 20px;
+                height: 20px;
+            }
+
+            header {
+                padding: 1rem 1.5rem;
+            }
+        }
+
+        /* Landscape orientation adjustments */
+        @media (max-width: 768px) and (orientation: landscape) {
+            .hero {
+                min-height: 400px;
+                padding: 3rem 1.5rem 2rem;
+            }
+
+            .hero-content {
+                padding: 2rem 2rem;
+            }
+
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .about, .services, .portfolio, .why-choose {
+                padding: 2.5rem 1.5rem;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>📋 Task Planner</h1>
-        
-        <div class="input-section">
-            <input 
-                type="text" 
-                id="taskInput" 
-                placeholder="Add a new task..."
-                autocomplete="off"
-            >
-            <button id="addBtn">Add</button>
+    <!-- FLEXBOX: Header Navigation -->
+    <header>
+        <nav>
+            <div class="logo-container">
+                <div class="logo-icon">
+                    <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="20" y="20" width="25" height="60" rx="3" fill="white" opacity="0.9"/>
+                        <rect x="55" y="35" width="25" height="45" rx="3" fill="white" opacity="0.9"/>
+                        <path d="M30 15 L40 25 L50 15" stroke="white" stroke-width="3" fill="none" opacity="0.9"/>
+                        <circle cx="67.5" cy="25" r="8" fill="white" opacity="0.9"/>
+                    </svg>
+                </div>
+                <div class="logo">UGTECH SOLUTION</div>
+            </div>
+            <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#portfolio">Portfolio</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- FLEXBOX: Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>Empowering SMEs & Startups with Digital Innovation</h1>
+            <p>Transform your business with cutting-edge technology solutions designed for growth and success across Uganda and East Africa.</p>
+            <p class="location">📍 Located in Nakawa, Portbell Road, Kampala</p>
+            <a href="#services" class="btn">Explore Our Services</a>
         </div>
+    </section>
 
-        <div class="filter-section">
-            <button class="filter-btn active" data-filter="all">All</button>
-            <button class="filter-btn" data-filter="active">Active</button>
-            <button class="filter-btn" data-filter="completed">Completed</button>
+    <!-- Moving Text Banner -->
+    <div class="moving-text-container">
+        <div class="moving-text">
+            <span><span style="font-size: 1.5em; filter: drop-shadow(0 0 8px #4a90e2);">🚀</span> SEO Optimization</span>
+            <span><span style="font-size: 1.5em; filter: drop-shadow(0 0 8px #3498db);">⚡</span> Business Automation</span>
+            <span><span style="font-size: 1.5em; filter: drop-shadow(0 0 8px #2ecc71);">💳</span> Mobile Money Integration</span>
+            <span><span style="font-size: 1.5em; filter: drop-shadow(0 0 8px #9b59b6);">📊</span> Custom Dashboards</span>
+            <span><span style="font-size: 1.5em; filter: drop-shadow(0 0 8px #34495e);">🌐</span> Web Design & Development</span>
+            <span><span style="font-size: 1.5em; filter: drop-shadow(0 0 8px #1abc9c);">☁️</span> Web Hosting Services</span>
+            <span><span style="font-size: 1.5em; filter: drop-shadow(0 0 8px #4a90e2);">🚀</span> SEO Optimization</span>
+            <span><span style="font-size: 1.5em; filter: drop-shadow(0 0 8px #3498db);">⚡</span> Business Automation</span>
+            <span><span style="font-size: 1.5em; filter: drop-shadow(0 0 8px #2ecc71);">💳</span> Mobile Money Integration</span>
+            <span><span style="font-size: 1.5em; filter: drop-shadow(0 0 8px #9b59b6);">📊</span> Custom Dashboards</span>
+            <span><span style="font-size: 1.5em; filter: drop-shadow(0 0 8px #34495e);">🌐</span> Web Design & Development</span>
+            <span><span style="font-size: 1.5em; filter: drop-shadow(0 0 8px #1abc9c);">☁️</span> Web Hosting Services</span>
         </div>
-
-        <div class="stats" id="stats">
-            <span id="taskCount">0 tasks</span>
-        </div>
-
-        <ul id="todoList"></ul>
-
-        <button class="clear-all-btn" id="clearAllBtn">Clear All Tasks</button>
     </div>
 
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="container">
+            <h2 class="section-title">About UGTECH SOLUTION</h2>
+            <p class="section-subtitle">
+                We are a leading technology company based in Nakawa, Portbell Road, dedicated to empowering Small and Medium Enterprises (SMEs) and startups throughout Uganda and across East Africa. Our mission is to provide innovative digital solutions that drive business growth, streamline operations, and enhance digital presence in an increasingly connected world.
+            </p>
+        </div>
+    </section>
+
+    <!-- GRID: Services Section -->
+    <section class="services" id="services">
+        <div class="container">
+            <h2 class="section-title">Our Services</h2>
+            <p class="section-subtitle">Comprehensive tech solutions tailored to your business needs</p>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg width="120" height="120" viewBox="0 0 120 120" fill="none">
+                            <circle cx="60" cy="35" r="20" fill="#4a90e2" opacity="0.95"/>
+                            <path d="M30 80 L60 55 L90 80 Z" fill="#5dade2" opacity="0.9"/>
+                            <rect x="25" y="80" width="70" height="15" fill="#3498db" opacity="0.9"/>
+                            <circle cx="60" cy="35" r="8" fill="white" opacity="0.8"/>
+                        </svg>
+                    </div>
+                    <h3>SEO Optimization</h3>
+                    <p>Boost your online visibility and rank higher on search engines with our expert SEO strategies tailored for East African markets.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg width="120" height="120" viewBox="0 0 120 120" fill="none">
+                            <rect x="30" y="25" width="60" height="70" rx="5" fill="#3498db" opacity="0.9"/>
+                            <rect x="40" y="35" width="40" height="5" rx="2" fill="white" opacity="0.9"/>
+                            <rect x="40" y="45" width="40" height="5" rx="2" fill="white" opacity="0.9"/>
+                            <rect x="40" y="55" width="25" height="5" rx="2" fill="white" opacity="0.7"/>
+                            <path d="M50 70 L60 80 L80 60" stroke="#1abc9c" stroke-width="4" fill="none" opacity="0.9"/>
+                        </svg>
+                    </div>
+                    <h3>Business Automation</h3>
+                    <p>Streamline your operations and increase efficiency with custom automation solutions that save time and reduce costs.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg width="120" height="120" viewBox="0 0 120 120" fill="none">
+                            <rect x="35" y="20" width="50" height="80" rx="8" fill="#27ae60" opacity="0.9"/>
+                            <circle cx="60" cy="90" r="5" fill="white" opacity="0.9"/>
+                            <rect x="42" y="27" width="36" height="50" rx="2" fill="#2ecc71" opacity="0.5"/>
+                            <circle cx="60" cy="50" r="15" fill="white" opacity="0.3"/>
+                            <text x="60" y="58" text-anchor="middle" fill="white" font-size="18" font-weight="bold">$</text>
+                        </svg>
+                    </div>
+                    <h3>Mobile Money Integration</h3>
+                    <p>Seamlessly integrate MTN Mobile Money, Airtel Money, and other payment platforms into your business systems.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg width="120" height="120" viewBox="0 0 120 120" fill="none">
+                            <rect x="25" y="35" width="70" height="50" rx="5" fill="#9b59b6" opacity="0.9"/>
+                            <rect x="35" y="45" width="20" height="15" rx="2" fill="#8e44ad" opacity="0.9"/>
+                            <rect x="60" y="45" width="25" height="8" rx="2" fill="white" opacity="0.8"/>
+                            <rect x="60" y="57" width="25" height="3" rx="1" fill="white" opacity="0.6"/>
+                            <rect x="35" y="65" width="50" height="3" rx="1" fill="white" opacity="0.6"/>
+                            <rect x="35" y="72" width="35" height="3" rx="1" fill="white" opacity="0.6"/>
+                            <circle cx="45" cy="52" r="4" fill="white" opacity="0.9"/>
+                        </svg>
+                    </div>
+                    <h3>Custom Dashboards</h3>
+                    <p>Get real-time insights with beautifully designed, user-friendly dashboards that put your business data at your fingertips.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg width="120" height="120" viewBox="0 0 120 120" fill="none">
+                            <rect x="20" y="30" width="80" height="60" rx="3" fill="#34495e" opacity="0.9"/>
+                            <rect x="20" y="30" width="80" height="15" fill="#2c3e50" opacity="0.9"/>
+                            <circle cx="30" cy="37.5" r="3" fill="#e74c3c"/>
+                            <circle cx="40" cy="37.5" r="3" fill="#f39c12"/>
+                            <circle cx="50" cy="37.5" r="3" fill="#2ecc71"/>
+                            <rect x="30" y="55" width="35" height="25" rx="2" fill="#3498db" opacity="0.6"/>
+                            <rect x="70" y="55" width="20" height="4" rx="1" fill="white" opacity="0.7"/>
+                            <rect x="70" y="62" width="20" height="4" rx="1" fill="white" opacity="0.7"/>
+                            <rect x="70" y="69" width="15" height="4" rx="1" fill="white" opacity="0.7"/>
+                        </svg>
+                    </div>
+                    <h3>Web Design & Development</h3>
+                    <p>Create stunning, responsive websites that capture your brand identity and engage your target audience effectively.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg width="120" height="120" viewBox="0 0 120 120" fill="none">
+                            <rect x="25" y="40" width="70" height="45" rx="3" fill="#1abc9c" opacity="0.9"/>
+                            <path d="M35 50 L85 50" stroke="white" stroke-width="2" opacity="0.7"/>
+                            <path d="M35 60 L85 60" stroke="white" stroke-width="2" opacity="0.7"/>
+                            <path d="M35 70 L70 70" stroke="white" stroke-width="2" opacity="0.7"/>
+                            <circle cx="60" cy="25" r="12" fill="#16a085" opacity="0.9"/>
+                            <path d="M60 20 L60 30 M55 25 L65 25" stroke="white" stroke-width="2.5"/>
+                            <circle cx="40" cy="62" r="3" fill="#e74c3c" opacity="0.9"/>
+                            <circle cx="75" cy="62" r="3" fill="#2ecc71" opacity="0.9"/>
+                        </svg>
+                    </div>
+                    <h3>Web Hosting Services</h3>
+                    <p>Reliable, secure, and fast web hosting solutions with 99.9% uptime guarantee and 24/7 technical support.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- GRID: Portfolio Section -->
+    <section class="portfolio" id="portfolio">
+        <div class="container">
+            <h2 class="section-title">Our Work</h2>
+            <p class="section-subtitle">Success stories from businesses we've helped transform</p>
+            <div class="portfolio-grid">
+                <div class="portfolio-item">
+                    <div class="portfolio-icon">🎯</div>
+                    <div>E-commerce Platform<br>for Local Retailer</div>
+                </div>
+                <div class="portfolio-item">
+                    <div class="portfolio-icon">💳</div>
+                    <div>Mobile Money Integration<br>for Restaurant Chain</div>
+                </div>
+                <div class="portfolio-item">
+                    <div class="portfolio-icon">📊</div>
+                    <div>Analytics Dashboard<br>for Logistics Company</div>
+                </div>
+                <div class="portfolio-item">
+                    <div class="portfolio-icon">🏥</div>
+                    <div>Appointment System<br>for Healthcare Provider</div>
+                </div>
+                <div class="portfolio-item">
+                    <div class="portfolio-icon">🎓</div>
+                    <div>Learning Management<br>System for Institute</div>
+                </div>
+                <div class="portfolio-item">
+                    <div class="portfolio-icon">🏢</div>
+                    <div>Corporate Website<br>for Financial Services</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us -->
+    <section class="why-choose">
+        <div class="container">
+            <h2 class="section-title">Why Choose UGTECH SOLUTION?</h2>
+            <div class="features-grid">
+                <div class="feature">
+                    <div class="feature-icon">🚀</div>
+                    <h3>Fast Delivery</h3>
+                    <p>Quick turnaround times without compromising on quality</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">💡</div>
+                    <h3>Innovation</h3>
+                    <p>Cutting-edge solutions tailored to local market needs</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">🤝</div>
+                    <h3>Support</h3>
+                    <p>Dedicated 24/7 customer support and maintenance</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">💰</div>
+                    <h3>Affordable</h3>
+                    <p>Competitive pricing designed for SMEs and startups</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FLEXBOX: Footer -->
+    <footer id="contact">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>About UGTECH SOLUTION</h4>
+                <p>Empowering SMEs and startups across Uganda and East Africa with innovative digital solutions. We transform businesses through technology.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Our Services</h4>
+                <ul>
+                    <li><a href="#services">SEO Optimization</a></li>
+                    <li><a href="#services">Business Automation</a></li>
+                    <li><a href="#services">Mobile Money Integration</a></li>
+                    <li><a href="#services">Custom Dashboards</a></li>
+                    <li><a href="#services">Web Design & Hosting</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Contact Us</h4>
+                <div class="contact-info">
+                    <p><strong>Address:</strong><br>Nakawa, Portbell Road<br>Kampala, Uganda</p>
+                    <p><strong>Email:</strong><br>info@ugtechsolution.com</p>
+                    <p><strong>Phone:</strong><br>+256 765 947 877<br>+256 700 690 945<br>+256 781 903 525</p>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 UGTECH SOLUTION. All rights reserved. | Empowering East African Businesses</p>
+        </div>
+    </footer>
+
     <script>
-        // Task manager class
-        class TodoApp {
-            constructor() {
-                this.tasks = this.loadTasks();
-                this.currentFilter = 'all';
-                this.init();
-            }
-
-            init() {
-                this.taskInput = document.getElementById('taskInput');
-                this.addBtn = document.getElementById('addBtn');
-                this.todoList = document.getElementById('todoList');
-                this.clearAllBtn = document.getElementById('clearAllBtn');
-                this.filterBtns = document.querySelectorAll('.filter-btn');
-                this.stats = document.getElementById('taskCount');
-
-                this.addBtn.addEventListener('click', () => this.addTask());
-                this.taskInput.addEventListener('keypress', (e) => {
-                    if (e.key === 'Enter') this.addTask();
-                });
-                this.clearAllBtn.addEventListener('click', () => this.clearAllTasks());
-
-                this.filterBtns.forEach(btn => {
-                    btn.addEventListener('click', (e) => {
-                        this.filterBtns.forEach(b => b.classList.remove('active'));
-                        e.target.classList.add('active');
-                        this.currentFilter = e.target.dataset.filter;
-                        this.renderTasks();
-                    });
-                });
-
-                this.renderTasks();
-            }
-
-            loadTasks() {
-                const stored = localStorage.getItem('todoTasks');
-                return stored ? JSON.parse(stored) : [];
-            }
-
-            saveTasks() {
-                localStorage.setItem('todoTasks', JSON.stringify(this.tasks));
-            }
-
-            addTask() {
-                const text = this.taskInput.value.trim();
-                
-                if (text === '') {
-                    this.taskInput.focus();
-                    return;
-                }
-
-                const task = {
-                    id: Date.now(),
-                    text: text,
-                    completed: false,
-                    createdAt: new Date().toISOString()
-                };
-
-                this.tasks.unshift(task);
-                this.saveTasks();
-                this.taskInput.value = '';
-                this.renderTasks();
-                this.taskInput.focus();
-            }
-
-            deleteTask(id) {
-                this.tasks = this.tasks.filter(task => task.id !== id);
-                this.saveTasks();
-                this.renderTasks();
-            }
-
-            toggleTask(id) {
-                const task = this.tasks.find(t => t.id === id);
-                if (task) {
-                    task.completed = !task.completed;
-                    this.saveTasks();
-                    this.renderTasks();
-                }
-            }
-
-            clearAllTasks() {
-                if (this.tasks.length === 0) return;
-                
-                if (window.confirm('Are you sure you want to delete all tasks? This action cannot be undone.')) {
-                    this.tasks = [];
-                    this.saveTasks();
-                    this.renderTasks();
-                }
-            }
-
-            getFilteredTasks() {
-                switch(this.currentFilter) {
-                    case 'active':
-                        return this.tasks.filter(t => !t.completed);
-                    case 'completed':
-                        return this.tasks.filter(t => t.completed);
-                    default:
-                        return this.tasks;
-                }
-            }
-
-            updateStats() {
-                const total = this.tasks.length;
-                const completed = this.tasks.filter(t => t.completed).length;
-                const active = total - completed;
-
-                this.stats.textContent = `${total} total, ${active} active, ${completed} completed`;
-                this.clearAllBtn.disabled = total === 0;
-            }
-
-            renderTasks() {
-                const filteredTasks = this.getFilteredTasks();
-                this.todoList.innerHTML = '';
-
-                if (filteredTasks.length === 0) {
-                    const emptyState = document.createElement('div');
-                    emptyState.className = 'empty-state';
-                    emptyState.innerHTML = `
-                        <div class="empty-state-icon">✓</div>
-                        <p>${this.currentFilter === 'completed' ? 'No completed tasks' : 
-                             this.currentFilter === 'active' ? 'No active tasks' : 
-                             'No tasks yet. Add one above!'}</p>
-                    `;
-                    this.todoList.appendChild(emptyState);
-                } else {
-                    filteredTasks.forEach(task => {
-                        const li = document.createElement('li');
-                        li.className = `todo-item${task.completed ? ' completed' : ''}`;
-                        
-                        li.innerHTML = `
-                            <input 
-                                type="checkbox" 
-                                class="checkbox" 
-                                ${task.completed ? 'checked' : ''}
-                                data-id="${task.id}"
-                            >
-                            <span class="todo-text">${this.escapeHtml(task.text)}</span>
-                            <button class="delete-btn" data-id="${task.id}">Delete</button>
-                        `;
-
-                        const checkbox = li.querySelector('.checkbox');
-                        checkbox.addEventListener('change', () => this.toggleTask(task.id));
-
-                        const deleteBtn = li.querySelector('.delete-btn');
-                        deleteBtn.addEventListener('click', () => this.deleteTask(task.id));
-
-                        this.todoList.appendChild(li);
-                    });
-                }
-
-                this.updateStats();
-            }
-
-            escapeHtml(text) {
-                const div = document.createElement('div');
-                div.textContent = text;
-                return div.innerHTML;
-            }
+        function toggleMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('active');
         }
 
-        // Initialize the app
-        const app = new TodoApp();
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('navLinks').classList.remove('active');
+            });
+        });
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        let lastScroll = 0;
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            const currentScroll = window.pageYOffset;
+            
+            if (currentScroll <= 0) {
+                header.style.boxShadow = '0 8px 32px rgba(31, 38, 135, 0.15)';
+            } else {
+                header.style.boxShadow = '0 8px 32px rgba(31, 38, 135, 0.25)';
+            }
+            
+            lastScroll = currentScroll;
+        });
     </script>
 </body>
 </html>
